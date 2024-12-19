@@ -1,4 +1,4 @@
-.listel a{
+li{
     font-size: 20px;
     padding: 10px;
     margin-block: 10px;
@@ -8,6 +8,6 @@
     background-color: deepskyblue;
 
 }
-.listel a:hover{
+li:hover{
     background-color: dodgerblue;
 }
