@@ -5,8 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+<p id="a"></p>
 <script>
+    const urlParameters = new URLSearchParams(window.location.search);
 
+    //Checks whether a parameter named "playerName" exists:
+    if (!urlParameters.has("uuid")) {
+        history.back(); //If not, take the player back.
+    }
+    const uuid = urlParameters.get("uuid");
+    let a = document.getElementById("a");
+    a.innerHTML = uuid;
 </script>
 </body>
 </html>
