@@ -1,0 +1,13 @@
+.listel a{
+    font-size: 20px;
+    padding: 10px;
+    margin-block: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-shadow: 2px 2px 8px #FF0000;
+    background-color: deepskyblue;
+
+}
+.listel a:hover{
+    background-color: dodgerblue;
+}
