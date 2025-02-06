@@ -45,12 +45,12 @@
     {
 
         Instascan.Camera.getCameras().then(function (cameras) {
-            if(camNum => cameras.length){
+            camNum++;
+            if(camNum >= cameras.length){
                 camNum = 0;
             }
             if (camNum < cameras.length) {
                 scanner.start(cameras[camNum]);
-                camNum++;
             }
             else {
                 console.error('No cameras found.');
