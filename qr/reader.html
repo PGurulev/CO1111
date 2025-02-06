@@ -7,8 +7,17 @@
 </head>
 <body>
 <video id="preview"></video>
+<input type="button" onclick="changeTheCam()">
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content"></div>
 <script>
+    var camNum = 0;
+    function changeTheCam()
+    {
+        camNum++;
+        if(camNum >= cameras.length) {
+        camNum = 0;
+        }
+    }
     var opts = {
 // Whether to scan continuously for QR codes. If false, use scanner.scan() to
 // manually scan. If true, the scanner emits the "scan" event when a QR code is
