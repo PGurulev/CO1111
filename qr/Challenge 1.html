@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    #scanner-container {
+      display: none;
+      text-align: center;
+    }
+    #result {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="startScanner()">Scan QR Code</button>
+<div id="scanner-container">
+  <div id="qr-reader"></div>
+  <button onclick="stopScanner()">Stop Scanner</button>
+</div>
+<p id="result"></p>
+
+<script>
+  let html5QrCode;
+
+  function startScanner() {
+    document.getElementById("scanner-container").style.display = "block";
+    html5QrCode = new Html5Qrcode("qr-reader");
+
+    html5QrCode.start(
+            { facingMode: "environment" }, // Use the back camera
+            { fps: 10, qrbox: 250 },
+            (decodedText) => {
+              document.getElementById("result").innerText = "Scanned: " + decodedText;
+              stopScanner();
+            },
+            (errorMessage) => {
+              console.log(errorMessage);
+            }
+    ).catch(err => console.error(err));
+  }
+
+  function stopScanner() {
+    if (html5QrCode) {
+      html5QrCode.stop().then(() => {
+        document.getElementById("scanner-container").style.display = "none";
+      }).catch(err => console.error(err));
+    }
+  }
+</script>
+
+</body>
+</html>
