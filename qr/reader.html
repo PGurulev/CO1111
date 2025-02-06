@@ -7,17 +7,10 @@
 </head>
 <body>
 <video id="preview"></video>
-<input type="button" onclick="changeTheCam()" content="Change the camera">
+<input type="button" onclick="changeTheCam()" value="Change the camera"/>
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content"></div>
 <script>
     var camNum = 0;
-    function changeTheCam()
-    {
-        camNum++;
-        if(camNum >= cameras.length) {
-        camNum = 0;
-        }
-    }
     var opts = {
 // Whether to scan continuously for QR codes. If false, use scanner.scan() to
 // manually scan. If true, the scanner emits the "scan" event when a QR code is
@@ -47,21 +40,31 @@
         scanPeriod: 1
     };
     var scanner = new Instascan.Scanner(opts);
-    Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-            scanner.start(cameras[camNum]);
-        } else {
-            console.error('No cameras found.');
-            alert("No cameras found.");
-        }
-    }).catch(function (e) {
-        console.error(e);
-        document.write(e);
-    })
-    scanner.addListener('scan', function (content) {
-        console.log(content);
-        document.getElementById("content").innerHTML = content;
-    });
+
+    function changeTheCam()
+    {
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if(camNum => cameras.length){
+                camNum = 0;
+            }
+            if (camNum < cameras.length) {
+                scanner.start(cameras[camNum]);
+                camNum++;
+            }
+            else {
+                console.error('No cameras found.');
+                alert("No cameras found.");
+            }
+        }).catch(function (e) {
+            console.error(e);
+            document.write(e);
+        })
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+            document.getElementById("content").innerHTML = content;
+        });
+    }
 </script>
 </body>
 </html>
