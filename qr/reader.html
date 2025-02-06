@@ -61,7 +61,7 @@
         }).catch(function (e) {
             console.error(e);
             document.write(e);
-
+            scanner.stop();
         })
         scanner.addListener('scan', function (content) {
             console.log(content);
