@@ -7,6 +7,7 @@
 </head>
 <body>
 <video id="preview"></video>
+<input type="button" onclick="startTheCam()" value="Start QR Camera" />
 <input type="button" onclick="changeTheCam()" value="Change the camera"/>
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content"></div>
 <script>
@@ -39,18 +40,19 @@
 // Default 1 (i.e. analyze every frame).
         scanPeriod: 1
     };
-    var scanner = new Instascan.Scanner(opts);
-
+    function startTheCam() {
+        var scanner = new Instascan.Scanner(opts);
+    }
     function changeTheCam()
     {
 
         Instascan.Camera.getCameras().then(function (cameras) {
-            if(camNum => cameras.length){
+            camNum++;
+            if(camNum >= cameras.length){
                 camNum = 0;
             }
             if (camNum < cameras.length) {
                 scanner.start(cameras[camNum]);
-                camNum++;
             }
             else {
                 console.error('No cameras found.');
@@ -59,6 +61,7 @@
         }).catch(function (e) {
             console.error(e);
             document.write(e);
+
         })
         scanner.addListener('scan', function (content) {
             console.log(content);
