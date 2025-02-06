@@ -7,7 +7,7 @@
 </head>
 <body>
 <video id="preview"></video>
-<input type="button" onclick="changeTheCam()">
+<input type="button" onclick="changeTheCam()" content="Change the camera">
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content"></div>
 <script>
     var camNum = 0;
@@ -49,7 +49,7 @@
     var scanner = new Instascan.Scanner(opts);
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
-            scanner.start(cameras[0]);
+            scanner.start(cameras[camNum]);
         } else {
             console.error('No cameras found.');
             alert("No cameras found.");
