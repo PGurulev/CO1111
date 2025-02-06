@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Scanner</title>
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
   <style>
     #scanner-container {
       display: none;
       text-align: center;
+    }
+    video {
+      width: 100%;
+      max-width: 400px;
     }
     #result {
       margin-top: 10px;
@@ -21,36 +25,42 @@
 
 <button onclick="startScanner()">Scan QR Code</button>
 <div id="scanner-container">
-  <div id="qr-reader"></div>
+  <video id="qr-video"></video>
   <button onclick="stopScanner()">Stop Scanner</button>
 </div>
 <p id="result"></p>
 
 <script>
-  let html5QrCode;
+  let scanner;
 
   function startScanner() {
     document.getElementById("scanner-container").style.display = "block";
-    html5QrCode = new Html5Qrcode("qr-reader");
+    scanner = new Instascan.Scanner({ video: document.getElementById('qr-video') });
 
-    html5QrCode.start(
-            { facingMode: "environment" }, // Use the back camera
-            { fps: 10, qrbox: 250 },
-            (decodedText) => {
-              document.getElementById("result").innerText = "Scanned: " + decodedText;
-              stopScanner();
-            },
-            (errorMessage) => {
-              console.log(errorMessage);
-            }
-    ).catch(err => console.error(err));
+    scanner.addListener('scan', function (content) {
+      document.getElementById("result").innerText = "Scanned: " + content;
+      stopScanner();
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+      if (cameras.length > 0) {
+        scanner.start(cameras[0]);  // Start using the first available camera
+      } else {
+        console.error('No cameras found.');
+        alert("No cameras found.");
+        stopScanner();
+      }
+    }).catch(function (e) {
+      console.error(e);
+      alert("Error accessing camera: " + e);
+      stopScanner();
+    });
   }
 
   function stopScanner() {
-    if (html5QrCode) {
-      html5QrCode.stop().then(() => {
-        document.getElementById("scanner-container").style.display = "none";
-      }).catch(err => console.error(err));
+    if (scanner) {
+      scanner.stop();
+      document.getElementById("scanner-container").style.display = "none";
     }
   }
 </script>
