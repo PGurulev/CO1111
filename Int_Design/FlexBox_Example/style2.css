@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    /*flex-direction: column-reverse;*/
+    height: 200px;
+    border: 1px solid grey;
+    align-items: Center;
+    gap: 10px;
+}
+.item {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+#item1 {
+    background-color: lightcoral;
+    flex-grow: 3;
+}
+#item2 {
+    background-color: aquamarine;
+}
+#item3 {
+    background-color: aqua;
+}

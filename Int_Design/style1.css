@@ -1,0 +1,87 @@
+p {
+    color: darkgrey;
+}
+
+.question {
+    background-color: grey;
+    padding: 3px;
+    border-top: 5px solid red;
+    border-right: 5px double green;
+    border-bottom: 5px dashed blue;
+    border-left: 5px groove orange;
+    text-shadow: 1.5px 1.5px 2px darkcyan;
+}
+
+header, footer {
+    background-color: darkcyan;
+    color: white;
+    padding: 5px;
+}
+
+* {
+    font-family: "Arial", Arial, sans-serif;
+}
+
+.answer {
+    font-family: "Courier New";
+}
+
+h1 {
+    font-family: "Impact";
+}
+
+footer small {
+    font-size: 11px;
+}
+
+main {
+    font-size: 1.2em;
+    text-align: center;
+    position: relative;
+}
+
+footer {
+    text-align: right;
+}
+
+#hint {
+    background-color: yellow;
+    position: absolute;
+    top: 35px;
+    right: 50px;
+    margin: 10px;
+    padding: 10px 15px;
+    border: 2px dotted red;
+    box-shadow: 7px 7px 10px black;
+    border-radius: 5px 15px 5px 15px;
+    opacity: 0.5;
+}
+
+#hint p {
+    margin: 0;
+}
+#buttonsub{
+    background-color: lightgray;
+    border-radius: 3px;
+    padding: 10px;
+    border: 2px solid black;
+}
+#buttonsub:hover {
+    background-color: black;
+    color: white;
+}
+#buttonsub:active {
+    opacity: 0.3;
+}
+input[type=text] {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    border: 2px solid black;
+}
+input[type=password] {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    border: 2px solid black;
+}
