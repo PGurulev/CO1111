@@ -3,3 +3,4 @@ College project
 team members are:
 Petr Gurulev
 Stephen Reynders
+Cynthia Bunea
