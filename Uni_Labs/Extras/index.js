@@ -37,7 +37,7 @@ let OBJ = JSON.parse(thcJSONResponse);
 if(OBJ.status === "OK") {
     let htm = document.getElementById("names");
     for(let i = 0; i < OBJ.treasureHunts.length; i++) {
-        htm.innerHTML += "<a href="+OBJ.treasureHunts[i].uuid+"'start.html?uuid='><li class='listel'>"+OBJ.treasureHunts[i].name+"</li></a>"
+        htm.innerHTML += "<a href='start.html?uuid='"+OBJ.treasureHunts[i].uuid+"><li class='listel'>"+OBJ.treasureHunts[i].name+"</li></a>"
     }
 }
 else
