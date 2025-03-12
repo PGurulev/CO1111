@@ -21,6 +21,7 @@ function startHunt(PlayerName,gameid)
             console.log(jsonObject)
             var sessionID = jsonObject.session;
             var numOfQuestions = jsonObject.numOfQuestions;
+            getQuestion(sessionID);
         });
 }
 function getQuestion(sessionID){
