@@ -150,7 +150,7 @@ function skipQuestion(sessionID){
         });
 }
 function getLocation(){
-    return navigator.geolocation.getCurrentPosition(showPosition);
+    return navigator.geolocation.getCurrentPosition(showjPosition);
 }
 function getScore(sessionID){
     var URL = "https://codecyprus.org/th/api/score?session="+sessionID;
@@ -199,7 +199,7 @@ function findMinePosition(jsonObject, playerName){
 }
 function startAgain()
 {
-    location.replace("http://localhost:63342/CO1111/Project/index.html?_ijt=v5vb1d4lsumv2j4cu2i6t8klp0&_ij_reload=RELOAD_ON_SAVE");
+    location.replace("https://pgurulev.github.io/CO1111/Project/");
 }
 //Code from w3shools url="https://www.w3schools.com/js/js_cookies.asp"
 function getCookie(cname) {
