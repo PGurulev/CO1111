@@ -1,0 +1,196 @@
+body{
+    display : flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: lightgoldenrodyellow;
+}
+.header{
+    padding: 5px;
+    border-bottom:3px solid black;
+    font-size:20px;
+    letter-spacing: 3px;
+    color:black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    word-spacing: 5px;
+}
+img{
+    border-radius: 20%;
+}
+.sub-header{
+    padding: 30px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: outset;
+    margin: auto;
+    word-spacing: 5px;
+    font-size: 20px;
+    background-color: white;
+}
+
+* {box-sizing: border-box}
+input[type=text], input[type=password] {
+    width: 80%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+button {
+    background-color: grey;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancel {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+.submit {
+    padding: 14px 20px;
+    background-color: lightskyblue;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancel, .submit {
+    float: left;
+    width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 100px) {
+    .cancelbtn, .signupbtn {
+        width: 80%;
+    }
+}
+
+
+.instructions{
+    display: flex;
+    justify-content: start;
+    align-content: space-around;
+    padding: 20px;
+    border: 4px solid black;
+    font-size: 18px;
+    margin:auto;
+    font-weight: bold;
+    background-color: white;
+}
+footer{
+    align-content: center;
+    text-align: center;
+    align-items: end;
+    background-color: white;
+    padding: 10px;
+    border-top: 4px solid darkgoldenrod;
+
+}
+
+
+/*app page
+
+ */
+
+.header2{
+    padding: 5px;
+    border-bottom:3px solid black;
+    font-size:20px;
+    letter-spacing: 3px;
+    color:black;
+    text-align: center;
+    word-spacing: 5px;
+
+}
+
+.sub-header2{
+    padding: 10px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.start-button2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    word-spacing: 5px;
+    font-size: 20px;
+}
+
+footer_a{
+    align-content: center;
+    text-align: center;
+    align-items: end;
+    border-top: 4px solid darkgoldenrod;
+
+}
