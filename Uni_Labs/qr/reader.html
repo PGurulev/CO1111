@@ -7,6 +7,7 @@
 </head>
 <body>
 <video id="preview"></video>
+<input type="button" onclick="startScanner()" value="Start scanner">
 <input type="button" onclick="changeTheCam()" value="Change Camera">
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content">
 
@@ -42,21 +43,25 @@
 // Default 1 (i.e. analyze every frame).
         scanPeriod: 1
     };
-    var scanner = new Instascan.Scanner(opts);
-    Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-        } else {
-            console.error('No cameras found.');
-            alert("No cameras found.");
-        }
-    }).catch(function (e) {
-        console.error(e);
-    });
-    scanner.addListener('scan', function (content) {
-        console.log(content);
-        document.getElementById("content").innerHTML = content;
-    });
+    var scanner;
+    function startScanner() {
+        scanner = new Instascan.Scanner(opts);
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+                alert("No cameras found.");
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+            document.getElementById("content").innerHTML = content;
+        });
+    }
     function changeTheCam()
     {
 
