@@ -2,11 +2,9 @@ function getinfo(id) {
     const playerNameField = document.getElementById("fname");
     if(playerNameField.value != "") {
         var playerName = playerNameField.value;
-        console.log(playerName);
         let date = new Date();
         let dateTime = date.getTime()+365 * 24 * 60 * 60 * 1000;
         setCookie("playerName", playerName, dateTime);
-        console.log(getCookie("playerName"));
         document.getElementById("form").remove();
         const urlParameters = new URLSearchParams(window.location.search);
         const gameid = urlParameters.get("uuid");
@@ -16,13 +14,11 @@ function getinfo(id) {
 function startHunt(PlayerName,gameid)
 {
 
-    console.log(gameid);
     var platform="TreasureHuntApp";
     var URL = "https://codecyprus.org/th/api/start?player="+PlayerName+"&app="+platform+"&treasure-hunt-id="+gameid;
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
-            console.log(jsonObject)
             var sessionID = jsonObject.session;
             let date = new Date();
             let dateTime = date.getTime()+365 * 24 * 60 * 60 * 1000;
@@ -40,6 +36,9 @@ function getQuestion(sessionID){
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+                document.getElementById("header").innerHTML+="<div id='QRWraper'>" +
+                    "<input type='button' onclick='createQRReader()' value='Answer using QR Code'>" +
+                    "</div>";
                 j = document.getElementById("myWraper");
                 j.innerHTML += "<form id='form'>";
                 i = document.getElementById("form");
@@ -110,7 +109,6 @@ function getQuestion(sessionID){
         });
 }
 function getAnswer(sessionID, QType){
-    console.log(sessionID);
     if(QType == "NUMERIC" || QType == "INTEGER" || QType == "TEXT") {
        var ans = document.getElementById("ans").value;
     }
@@ -122,7 +120,31 @@ function getAnswer(sessionID, QType){
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
-            document.getElementById("form").remove();
+            if(document.getElementById("form")) {
+                document.getElementById("form").remove();
+            }
+            var Congrats = jsonObject.message;
+            var scorAdjustment = jsonObject.scoreAdjustment;
+            i = document.getElementById("myWraper");
+            console.log(scorAdjustment);
+            console.log(Congrats);
+            i.innerHTML+="<div id='secondWrap'>" +
+                "<h1 id='congratulation'>"+Congrats+"</h1>" +
+                "<p id='scoreAdjustment'>You got +"+scorAdjustment+"</p>" +
+                "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
+                "</div>";
+        });
+}
+function getAnswerQR(sessionID, value){
+
+    var URL = "https://codecyprus.org/th/api/answer?session="+sessionID+"&answer="+value;
+
+    fetch(URL)
+        .then(response => response.json()) //Parse JSON text to JavaScript object
+        .then(jsonObject => {
+            if(document.getElementById("form")) {
+                document.getElementById("form").remove();
+            }
             var Congrats = jsonObject.message;
             var scorAdjustment = jsonObject.scoreAdjustment;
             i = document.getElementById("myWraper");
@@ -166,7 +188,6 @@ function getCurrentLocation(position){
     fetch(URL)
         .then(response => response.json())
         .then(jsonObject => {
-            console.log(jsonObject);
         })
 }
 function getScore(sessionID){
@@ -241,4 +262,100 @@ function setCookie(cookieName, cookieValue, expireDays) {
     let expires = "expires=" + date.toUTCString();
     document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 }
+function createQRReader() {
+    if(document.getElementById("form")) {
+        document.getElementById("form").remove();
+    }
+    if(document.getElementById("QRWraper")) {
+        document.getElementById("QRWraper").remove();
+    }
+    i = document.getElementById("myWraper");
+    i.innerHTML+="<div id='QRContainer'>";
+    j = document.getElementById("QRContainer");
+    j.innerHTML+="<video id='preview'></video>" +
+        "<br>" +
+        "<input type='button' onclick='stopQRReader()' value='Stop Scanner'>" +
+        "<input type='button' onclick='changeTheCam()' value='Change Camera'>";
+    i.innerHTML+="</div>"
+    var opts = {
+// Whether to scan continuously for QR codes. If false, use scanner.scan() to
+// manually scan. If true, the scanner emits the "scan" event when a QR code is
+// scanned. Default true.
+        continuous: true,
+// The HTML element to use for the camera's video preview. Must be a <video>
+// element. When the camera is active, this element will have the "active" CSS
+// class, otherwise, it will have the "inactive" class. By default, an invisible
+// element will be created to host the video.
+        video: document.getElementById('preview'),
+// Whether to horizontally mirror the video preview. This is helpful when trying to
+// scan a QR code with a user-facing camera. Default true.
+        mirror: false,
+// Whether to include the scanned image data as part of the scan result. See the
+// "scan" event for image format details. Default false.
+        captureImage: false,
+// Only applies to continuous mode. Whether to actively scan when the tab is not
+// active.
+// When false, this reduces CPU usage when the tab is not active. Default true.
+        backgroundScan: true,
+// Only applies to continuous mode. The period, in milliseconds, before the same QR
+// code will be recognized in succession. Default 5000 (5 seconds).
+        refractoryPeriod: 5000,
+// Only applies to continuous mode. The period, in rendered frames, between scans. A
+// lower scan period increases CPU usage but makes scan response faster.
+// Default 1 (i.e. analyze every frame).
+        scanPeriod: 1
+    };
+    scanner = new Instascan.Scanner(opts);
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+            alert("No cameras found.");
+        }
+    }).catch(function (e) {
+        console.error(e);
+    });
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+        scanner.stop();
+        document.getElementById("QRContainer").remove();
+        getAnswerQR(getCookie('sessionID'), content);
+    });
+}
+function changeTheCam(){
+    Instascan.Camera.getCameras().then(function (cameras) {
+        camNum++;
+        if(camNum >= cameras.length){
+            camNum = 0;
+        }
+        if (camNum < cameras.length) {
+            scanner.start(cameras[camNum]);
+        }
+        else {
+            console.error('No cameras found.');
+            alert("No cameras found.");
+        }
+    }).catch(function (e) {
+        console.error(e);
+        document.write(e);
+        scanner.stop();
+    })
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+        scanner.stop();
+        document.getElementById("content").innerHTML = content;
+        getAnswerQR(getCookie('sessionID'), content);
+    });
+}
+function stopQRReader() {
+    if (scanner) {
+        scanner.stop();
+        document.getElementById("QRContainer").remove();
+        getQuestion(getCookie('sessionID'));
+    }
+}
 setInterval(getLocation, 31000);
+var scanner;
+var camNum=0;

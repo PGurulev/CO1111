@@ -9,6 +9,7 @@
 <video id="preview"></video>
 <input type="button" onclick="startScanner()" value="Start scanner">
 <input type="button" onclick="changeTheCam()" value="Change Camera">
+<input type="button" onclick="stopScanner()" value="Stop the Camera">
 <div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content">
 
 </div>
@@ -60,6 +61,7 @@
         scanner.addListener('scan', function (content) {
             console.log(content);
             document.getElementById("content").innerHTML = content;
+            scanner.stop();
         });
     }
     function changeTheCam()
@@ -85,7 +87,14 @@
         scanner.addListener('scan', function (content) {
             console.log(content);
             document.getElementById("content").innerHTML = content;
+            scanner.stop();
         });
+    }
+    function stopScanner() {
+        if (scanner) {
+            scanner.stop();
+            document.getElementById("scanner-container").style.display = "none";
+        }
     }
 </script>
 </html>
