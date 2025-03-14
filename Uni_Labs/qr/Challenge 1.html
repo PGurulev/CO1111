@@ -26,11 +26,13 @@
 <button onclick="startScanner()">Scan QR Code</button>
 <div id="scanner-container">
   <video id="qr-video"></video>
+  <button onclick="changeTheCam()">change the cam</button>
   <button onclick="stopScanner()">Stop Scanner</button>
 </div>
 <p id="result"></p>
 
 <script>
+  var camNum = 0;
   let scanner;
 
   function startScanner() {
@@ -54,6 +56,31 @@
       console.error(e);
       alert("Error accessing camera: " + e);
       stopScanner();
+    });
+  }
+  function changeTheCam()
+  {
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+      camNum++;
+      if(camNum >= cameras.length){
+        camNum = 0;
+      }
+      if (camNum < cameras.length) {
+        scanner.start(cameras[camNum]);
+      }
+      else {
+        console.error('No cameras found.');
+        alert("No cameras found.");
+      }
+    }).catch(function (e) {
+      console.error(e);
+      document.write(e);
+      scanner.stop();
+    })
+    scanner.addListener('scan', function (content) {
+      console.log(content);
+      document.getElementById("content").innerHTML = content;
     });
   }
 

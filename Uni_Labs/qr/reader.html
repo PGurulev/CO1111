@@ -41,6 +41,15 @@
         scanPeriod: 1
     };
     var scanner = new Instascan.Scanner(opts);
+    function startTheCam() {
+        document.getElementById("preview").style.display = "block";
+        scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+
+        scanner.addListener('scan', function (content) {
+            document.getElementById("result").innerText = "Scanned: " + content;
+            stopScanner();
+        });
+        }
     function changeTheCam()
     {
 
@@ -66,6 +75,7 @@
             document.getElementById("content").innerHTML = content;
         });
     }
+
 </script>
 </body>
 </html>

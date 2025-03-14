@@ -24,6 +24,9 @@ function startHunt(PlayerName,gameid)
         .then(jsonObject => {
             console.log(jsonObject)
             var sessionID = jsonObject.session;
+            let date = new Date();
+            let dateTime = date.getTime()+365 * 24 * 60 * 60 * 1000;
+            setCookie("sessionID", sessionID, dateTime);
             var numOfQuestions = jsonObject.numOfQuestions;
             getQuestion(sessionID);
         });
@@ -37,7 +40,6 @@ function getQuestion(sessionID){
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
-
                 j = document.getElementById("myWraper");
                 j.innerHTML += "<form id='form'>";
                 i = document.getElementById("form");
@@ -150,7 +152,22 @@ function skipQuestion(sessionID){
         });
 }
 function getLocation(){
-    return navigator.geolocation.getCurrentPosition(showjPosition);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getCurrentLocation);
+    }
+    else{
+        alert("Activate geolocation please or change the browser");
+    }
+}
+function getCurrentLocation(position){
+    console.log(getCookie('sessionID'));
+    var URL = "https://codecyprus.org/th/api/location?session="+getCookie("sessionID")+"&latitude="+JSON.stringify(position.coords.latitude)+"&longitude="+JSON.stringify(position.coords.longitude);
+    console.log(URL);
+    fetch(URL)
+        .then(response => response.json())
+        .then(jsonObject => {
+            console.log(jsonObject);
+        })
 }
 function getScore(sessionID){
     var URL = "https://codecyprus.org/th/api/score?session="+sessionID;
@@ -224,3 +241,4 @@ function setCookie(cookieName, cookieValue, expireDays) {
     let expires = "expires=" + date.toUTCString();
     document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 }
+setInterval(getLocation, 31000);
