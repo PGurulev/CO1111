@@ -6,14 +6,24 @@
     <script language="JavaScript" src="app.js"></script>
 </head>
 <body>
+
+<script>
+    document.onkeypress = function (e) {
+        e = e || window.event;
+        if (e.keyCode === 13) {
+            getinfo("form");
+        }
+    };
+</script>
+
 <header id="header">
 
 </header>
   <div id="myWraper">
-    <form id="form">
+    <form id="form" onsubmit="return false">
       <label for="fname">Enter your name to Play!</label><br>
       <input type="text" id="fname" name="fname"><br><br>
-      <button type="button" onclick="getinfo('form')">Submit</button>
+      <button type="button" onclick="getinfo('form');">Submit</button>
     </form>
   </div>
 </body>
