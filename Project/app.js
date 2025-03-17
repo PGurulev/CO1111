@@ -36,13 +36,18 @@ function getQuestion(sessionID){
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
-                document.getElementById("header").innerHTML+="<div id='QRWraper'>" +
-                    "<input type='button' onclick='createQRReader()' value='Answer using QR Code'>" +
-                    "</div>";
+            console.log(jsonObject.requiresLocation);
                 j = document.getElementById("myWraper");
                 j.innerHTML += "<form id='form'>";
                 i = document.getElementById("form");
+                if(jsonObject.requiresLocation){
+                    i.innerHTML+="<p>This question requires geolocation, please wait at least 30 seconds before answering it</p>" +
+                        "<br>";
+                }
             if(jsonObject.completed == false) {
+                    document.getElementById("header").innerHTML+="<div id='QRWraper'>" +
+                        "<input type='button' onclick='createQRReader()' value='Answer using QR Code'>" +
+                        "</div>";
                 if (jsonObject.questionType == "TEXT") {
                     i.innerHTML += "<label for='ans'>" + jsonObject.questionText + "</label><br>" +
                         "<input type='text' id='ans' name='ans'><br>" +
@@ -123,6 +128,10 @@ function getAnswer(sessionID, QType){
             if(document.getElementById("form")) {
                 document.getElementById("form").remove();
             }
+            if(document.getElementById("QRWraper"))
+            {
+                document.getElementById("QRWraper").remove();
+            }
             var Congrats = jsonObject.message;
             var scorAdjustment = jsonObject.scoreAdjustment;
             i = document.getElementById("myWraper");
@@ -130,7 +139,7 @@ function getAnswer(sessionID, QType){
             console.log(Congrats);
             i.innerHTML+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
-                "<p id='scoreAdjustment'>You got +"+scorAdjustment+"</p>" +
+                "<p id='scoreAdjustment'>You got "+scorAdjustment+"</p>" +
                 "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
                 "</div>";
         });
@@ -145,6 +154,10 @@ function getAnswerQR(sessionID, value){
             if(document.getElementById("form")) {
                 document.getElementById("form").remove();
             }
+            if(document.getElementById("QRWraper"))
+            {
+                document.getElementById("QRWraper").remove();
+            }
             var Congrats = jsonObject.message;
             var scorAdjustment = jsonObject.scoreAdjustment;
             i = document.getElementById("myWraper");
@@ -152,7 +165,7 @@ function getAnswerQR(sessionID, value){
             console.log(Congrats);
             i.innerHTML+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
-                "<p id='scoreAdjustment'>You got +"+scorAdjustment+"</p>" +
+                "<p id='scoreAdjustment'>You got "+scorAdjustment+"</p>" +
                 "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
                 "</div>";
         });
@@ -162,6 +175,10 @@ function skipQuestion(sessionID){
     fetch(URL)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            if(document.getElementById("QRWraper"))
+            {
+                document.getElementById("QRWraper").remove();
+            }
             var Congrats = jsonObject.message;
             var scorAdjustment = jsonObject.scoreAdjustment;
             document.getElementById("form").remove();
