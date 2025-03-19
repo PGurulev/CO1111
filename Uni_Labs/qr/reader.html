@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>QR Code Reader</title>
-    <script src="instascan.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 </head>
 <body>
 <video id="preview"></video>
-<input type="button" onclick="startTheCam()" value="Start QR Camera" />
-<input type="button" onclick="changeTheCam()" value="Change the camera"/>
-<div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content"></div>
+<input type="button" onclick="startScanner()" value="Start scanner">
+<input type="button" onclick="changeTheCam()" value="Change Camera">
+<input type="button" onclick="stopScanner()" value="Stop the Camera">
+<div style="margin: 20px; padding: 20px; background-color: black; color: white; text-align: center;" id="content">
+
+</div>
+</body>
 <script>
-    var camNum = 0;
+    var camNum=0;
     var opts = {
 // Whether to scan continuously for QR codes. If false, use scanner.scan() to
 // manually scan. If true, the scanner emits the "scan" event when a QR code is
@@ -40,7 +44,26 @@
 // Default 1 (i.e. analyze every frame).
         scanPeriod: 1
     };
-    var scanner = new Instascan.Scanner(opts);
+    var scanner;
+    function startScanner() {
+        scanner = new Instascan.Scanner(opts);
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+                alert("No cameras found.");
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+            document.getElementById("content").innerHTML = content;
+            scanner.stop();
+        });
+    }
     function changeTheCam()
     {
 
@@ -64,8 +87,14 @@
         scanner.addListener('scan', function (content) {
             console.log(content);
             document.getElementById("content").innerHTML = content;
+            scanner.stop();
         });
     }
+    function stopScanner() {
+        if (scanner) {
+            scanner.stop();
+            document.getElementById("scanner-container").style.display = "none";
+        }
+    }
 </script>
-</body>
 </html>
