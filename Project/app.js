@@ -46,15 +46,15 @@ function getQuestion(sessionID){
                 }
             if(jsonObject.completed == false) {
                     document.getElementById("header").innerHTML+="<div id='QRWraper'>" +
-                        "<input type='button' onclick='createQRReader()' value='Answer using QR Code'>" +
+                        "<input type='button' class='buttons' onclick='createQRReader()' value='Answer using QR Code'>" +
                         "</div>";
                 if (jsonObject.questionType == "TEXT") {
                     i.innerHTML += "<div class ='textQ'>" +
                         "<label for='ans'>" + jsonObject.questionText + "</label><br>" +
                         "<input type='text' id='ans' name='ans'><br>" +
-                        "<input type='button' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
+                        "<input type='button' class='buttons' getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
                     if (jsonObject.canBeSkipped) {
-                        document.getElementsByClassName("textQ")[0]+= "<input type='button' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
+                        document.getElementsByClassName("textQ")[0]+= "<input type='button' class='buttons' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
                     }
                     i.innerHTML += "</div>";
                 } else if (jsonObject.questionType == "NUMERIC" || jsonObject.questionType == "INTEGER") {
@@ -62,17 +62,17 @@ function getQuestion(sessionID){
                         i.innerHTML += "<div class='numericQ'>" +
                             "<label for='ans'>" + jsonObject.questionText + "</label><br>" +
                             "<input type='number' id='ans' name='ans' step='0.01'><br>" +
-                            "<input type='button' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
+                            "<input type='button' class='buttons' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
                         if (jsonObject.canBeSkipped) {
-                            document.getElementsByClassName("numericQ")[0].innerHTML += "<input type='button' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
+                            document.getElementsByClassName("numericQ")[0].innerHTML += "<input type='button' class='buttons' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
                         }
                         i.innerHTML += "</div>";
                     } else {
                         i.innerHTML += "<div class='numericQ'><label for='ans'>" + jsonObject.questionText + "</label><br>" +
                             "<input type='number' id='ans' name='ans'><br>" +
-                            "<input type='button' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
+                            "<input type='button' class='buttons' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
                         if (jsonObject.canBeSkipped) {
-                            document.getElementsByClassName("numericQ")[0].innerHTML += "<input type='button' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
+                            document.getElementsByClassName("numericQ")[0].innerHTML += "<input type='button' class='buttons' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
                         }
                         i.innerHTML += "</div>";
                     }
@@ -84,9 +84,9 @@ function getQuestion(sessionID){
                             "<label for='true'>True</label><br>\n" +
                             "<input type='radio' id='false' name='ans' value='False'>\n" +
                             "<label for='false'>False</label><br>\n " +
-                            "<input type='button' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
+                            "<input type='button' class='buttons' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
                         if (jsonObject.canBeSkipped) {
-                            document.getElementsByClassName("booleanQ")[0].innerHTML += "<input type='button' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
+                            document.getElementsByClassName("booleanQ")[0].innerHTML += "<input type='button' class='buttons' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
                         }
                         i.innerHTML+="</div>";
                     } else {
@@ -100,9 +100,9 @@ function getQuestion(sessionID){
                             "<label for='C'>C</label><br>\n" +
                             "<input type='radio' id='D' name='ans' value='D'>\n" +
                             "<label for='D'>D</label><br>\n " +
-                            "<input type='button' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
+                            "<input type='button' class='buttons' onclick='getAnswer(" + JSON.stringify(sessionID) + ", " + JSON.stringify(jsonObject.questionType) + ")' value='Submit'>";
                         if (jsonObject.canBeSkipped) {
-                            document.getElementsByClassName("MCQ")[0].innerHTML += "<input type='button' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
+                            document.getElementsByClassName("MCQ")[0].innerHTML += "<input type='button' class='buttons' onclick='skipQuestion(" + JSON.stringify(sessionID) + ")' value='Skip the question'>";
                         }
                         i.innerHTML+="</div>";
                     }
@@ -116,8 +116,8 @@ function getQuestion(sessionID){
                     "<h1 id='gameEnd'> Thanks for playing treasure hunt" +
                     "<p>You can eather start new game or check your position on leaderboard</p>" +
                     "<br>" +
-                    "<input type='button' onclick='getLeaderBoard(" + JSON.stringify(sessionID) + ")' value='Leader board'>" +
-                    "<input type='button' onclick='startAgain()' value='Start Again!'>" +
+                    "<input type='button' class='buttons' onclick='getLeaderBoard(" + JSON.stringify(sessionID) + ")' value='Leader board'>" +
+                    "<input type='button' class='buttons' onclick='startAgain()' value='Start Again!'>" +
                     "</div>"
             }
         });
@@ -149,7 +149,7 @@ function getAnswer(sessionID, QType){
             i.innerHTML+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
                 "<p id='scoreAdjustment'>You got "+scorAdjustment+"</p>" +
-                "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
+                "<input type='button' class='buttons' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
                 "</div>";
         });
 }
@@ -175,7 +175,7 @@ function getAnswerQR(sessionID, value){
             i.innerHTML+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
                 "<p id='scoreAdjustment'>You got "+scorAdjustment+"</p>" +
-                "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
+                "<input type='button' class='buttons' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
                 "</div>";
         });
 }
@@ -195,7 +195,7 @@ function skipQuestion(sessionID){
             i.innerHTML+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
                 "<p id='scoreAdjustment'>You got "+scorAdjustment+"</p>" +
-                "<input type='button' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
+                "<input type='button' class='buttons' value='Continue' onclick='getQuestion("+JSON.stringify(sessionID)+")'>" +
                 "</div>";
         });
 }
@@ -227,7 +227,7 @@ function getScore(sessionID){
             i+="<div id='secondWrap'>" +
                 "<h1 id='congratulation'>"+Congrats+"</h1>" +
                 "<p id='scoreAdjustment'>You got +"+scorAdjustment+"</p>" +
-                "<input type='button' value='Continue' onclick='getQuestion("+sessionID+")'>" +
+                "<input type='button' class='buttons' value='Continue' onclick='getQuestion("+sessionID+")'>" +
                 "</div>";
         });
 }
@@ -247,7 +247,7 @@ function getLeaderBoard(sessionID) {
                 k.innerHTML+= "<h2>Player № "+(j+1)+" "+jsonObject.leaderboard[j].player+" and his score is: "+jsonObject.leaderboard[j].score+"</h2>";
             }
 
-            i.innerHTML+="<input type='button' onclick='startAgain()' value='Start Again!'>" +
+            i.innerHTML+="<input type='button' class='buttons' onclick='startAgain()' value='Start Again!'>" +
                 "</div>";
         });
 }
@@ -300,8 +300,8 @@ function createQRReader() {
     j = document.getElementById("QRContainer");
     j.innerHTML+="<video id='preview'></video>" +
         "<br>" +
-        "<input type='button' onclick='stopQRReader()' value='Stop Scanner'>" +
-        "<input type='button' onclick='changeTheCam()' value='Change Camera'>";
+        "<input type='button' class='buttons' onclick='stopQRReader()' value='Stop Scanner'>" +
+        "<input type='button' class='buttons' onclick='changeTheCam()' value='Change Camera'>";
     i.innerHTML+="</div>"
     var opts = {
 // Whether to scan continuously for QR codes. If false, use scanner.scan() to
