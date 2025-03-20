@@ -1,0 +1,27 @@
+Ids:
+myWraper index.html
+myWraper app.html
+form app.html
+fname app.html
+QRWraper app.js
+ans app.js
+true app.js
+false app.js
+A app.js
+B app.js
+C app.js
+D app.js
+end app.js
+gameEnd app.js
+secondWrap app.js
+congratulation app.js
+scoreAdjustment app.js
+QRContainer
+preview
+Class:
+Hunts index.js
+buttons app.js
+textQ app.js
+numericQ app.js
+booleanQ app.js
+MCQ app.js
