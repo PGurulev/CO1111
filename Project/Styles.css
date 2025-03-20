@@ -24,11 +24,22 @@ button {
     background-color: goldenrod;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 25px;
     cursor: pointer;
 }
-
+.Hunts{
+    text-align: center;
+    text-color: red;
+}
 button:hover {
     background-color: gold;
 }
 
+.MCQ{
+    display: grid;
+    background-color: #f44336;
+}
+.booleanQ{
+    display: grid;
+    background-color: white;
+}
