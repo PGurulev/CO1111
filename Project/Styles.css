@@ -29,17 +29,15 @@ button {
 }
 .Hunts{
     text-align: center;
-    text-color: red;
 }
 button:hover {
     background-color: gold;
 }
 
 .MCQ{
-    display: grid;
-    background-color: #f44336;
+    font-size: 25px;
+    color: olive;
 }
 .booleanQ{
-    display: grid;
-    background-color: white;
+    font-size: 25px;
 }
